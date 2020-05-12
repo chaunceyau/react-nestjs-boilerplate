@@ -13,7 +13,7 @@ export class AuthService {
     if (user?.password === hashedPassword) {
       const { password, salt, ...result } = user
       return {
-        userId: result.userId,
+        id: result.id,
       }
     }
     return null

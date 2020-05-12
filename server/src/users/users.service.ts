@@ -9,23 +9,23 @@ export class UsersService {
   constructor() {
     this.users = [
       {
-        userId: 1,
+        id: 1,
         username: 'john',
         // password: 'changeme',
         password:
-        '$2b$10$XVjQDiTx3VIYH80fp8zJ5OF9F9k/CV46BnOgd8dgh570cWmOT4PL6',
+          '$2b$10$XVjQDiTx3VIYH80fp8zJ5OF9F9k/CV46BnOgd8dgh570cWmOT4PL6',
         salt: '$2b$10$XVjQDiTx3VIYH80fp8zJ5O',
       },
       {
-        userId: 2,
+        id: 2,
         username: 'chris',
         // password: 'secret',
         password:
-        '$2b$10$PsxOx10i/Mb/dzBb6kG7L.sjugKRv7/vmQBW2GuGsIpPALWhUcRp2',
+          '$2b$10$PsxOx10i/Mb/dzBb6kG7L.sjugKRv7/vmQBW2GuGsIpPALWhUcRp2',
         salt: '$2b$10$PsxOx10i/Mb/dzBb6kG7L.',
       },
       {
-        userId: 3,
+        id: 3,
         username: 'maria',
         // password: 'guess',
         password:
@@ -39,16 +39,22 @@ export class UsersService {
     // simulate a network call
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(this.users.find((user) => user.username === username))
+        const { password, salt, ...result } = this.users.find(
+          user => user.username === username
+        )
+        resolve(result)
       }, 250)
     })
   }
 
-  async findById(id: string): Promise<User | undefined> {
+  async findOneById(id: number): Promise<User | undefined> {
     // simulate a network call
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(this.users.find((user) => user.userId === id))
+        const { password, salt, ...result } = this.users.find(
+          user => user.id === id
+        )
+        resolve(result)
       }, 250)
     })
   }
