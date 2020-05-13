@@ -6,6 +6,7 @@ import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 //
 import { AppModule } from './app.module'
+import { ValidationPipe } from '@nestjs/common'
 //
 
 async function bootstrap() {
@@ -35,6 +36,7 @@ async function bootstrap() {
   )
   app.use(passport.initialize())
   app.use(passport.session())
+  app.useGlobalPipes(new ValidationPipe())
   await app.listen(5000)
 }
 

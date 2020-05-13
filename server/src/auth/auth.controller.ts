@@ -5,15 +5,22 @@ import {
   Response,
   Get,
   UseGuards,
+  Body,
 } from '@nestjs/common'
 //
 import { UserService } from '../user/user.service'
 import { LoginGuard } from '../common/guards/login.guard'
 import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
+import { AccountService } from '../account/account.service'
+import { CreateAccountDto } from '../account/dto/create-account.dto'
+import { User } from '../user/models/user.model'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private accountService: AccountService
+  ) {}
 
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
@@ -26,6 +33,13 @@ export class AuthController {
   @Post('login')
   login() {
     return { success: true }
+  }
+
+  @Post('register')
+  async register(
+    @Body() { username, password: pass }: CreateAccountDto
+  ): Promise<User> {
+    return this.accountService.createAccount(username, pass)
   }
 
   @Get('logout')

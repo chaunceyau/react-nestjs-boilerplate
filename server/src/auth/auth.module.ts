@@ -6,7 +6,8 @@ import { LocalStrategy } from './util/local.strategy'
 import { UserModule } from '../user/user.module'
 import { AuthController } from './auth.controller'
 import { SessionSerializer } from './util/session.serializer'
-import { PrismaModule } from 'src/prisma/prisma.module'
+import { PrismaModule } from '../prisma/prisma.module'
+import { AccountService } from '../account/account.service'
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { PrismaModule } from 'src/prisma/prisma.module'
       session: true,
     }),
   ],
-  providers: [AuthService, LocalStrategy, SessionSerializer],
+  providers: [AuthService, AccountService, LocalStrategy, SessionSerializer],
   controllers: [AuthController],
 })
 export class AuthModule {}

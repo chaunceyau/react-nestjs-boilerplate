@@ -8,6 +8,7 @@ export class RESTAuthenticatedGuard implements CanActivate {
     return request.isAuthenticated()
   }
 }
+
 @Injectable()
 export class GraphQLAuthenticatedGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
