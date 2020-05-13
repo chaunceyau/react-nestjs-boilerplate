@@ -12,7 +12,7 @@ import { UserService } from '../user/user.service'
 import { LoginGuard } from '../common/guards/login.guard'
 import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { AccountService } from '../account/account.service'
-import { CreateAccountDto } from '../account/dto/create-account.dto'
+import { CreateAccountDTO } from '../account/dto/create-account.dto'
 import { User } from '../user/models/user.model'
 
 @Controller('auth')
@@ -36,7 +36,7 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Body() { username, password }: CreateAccountDto
+    @Body() { username, password }: CreateAccountDTO
   ): Promise<User> {
     return this.accountService.createAccount(username, password)
   }

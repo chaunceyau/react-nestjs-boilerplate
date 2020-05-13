@@ -1,6 +1,6 @@
 import { IsEmail, Length } from 'class-validator'
 
-export class CreateAccountDto {
+export class CreateAccountDTO {
   @IsEmail()
   @Length(4)
   username: string
