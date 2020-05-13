@@ -1,24 +1,24 @@
-import { NestFactory } from '@nestjs/core'
 import { createClient } from 'redis'
+import { NestFactory } from '@nestjs/core'
+import { ValidationPipe } from '@nestjs/common'
 //
 import * as passport from 'passport'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 //
 import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
-//
 
 async function bootstrap() {
+  const RedisStore = connectRedis(session)
+  const redisClient = createClient()
+
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: 'http://localhost:3000',
       credentials: true,
     },
   })
-  const RedisStore = connectRedis(session)
-  const redisClient = createClient()
-  // app.set('trust proxy', 1) // trust first proxy
+
   app.use(
     session({
       name: 'connect.sid',
@@ -34,9 +34,12 @@ async function bootstrap() {
       store: new RedisStore({ client: redisClient }),
     })
   )
+
   app.use(passport.initialize())
   app.use(passport.session())
+
   app.useGlobalPipes(new ValidationPipe())
+
   await app.listen(5000)
 }
 

@@ -8,12 +8,12 @@ import {
   Body,
 } from '@nestjs/common'
 //
+import { User } from '../user/models/user.model'
 import { UserService } from '../user/user.service'
 import { LoginGuard } from '../common/guards/login.guard'
-import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
 import { AccountService } from '../account/account.service'
 import { CreateAccountDTO } from '../account/dto/create-account.dto'
-import { User } from '../user/models/user.model'
+import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
 
 @Controller('auth')
 export class AuthController {
