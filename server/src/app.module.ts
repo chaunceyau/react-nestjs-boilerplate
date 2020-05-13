@@ -2,7 +2,7 @@ import { join } from 'path'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 //
-import { UserModule } from './users/user.module'
+import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 
 @Module({

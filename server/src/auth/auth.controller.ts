@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 //
-import { UserService } from '../users/user.service'
+import { UserService } from '../user/user.service'
 import { LoginGuard } from '../common/guards/login.guard'
 import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
 
