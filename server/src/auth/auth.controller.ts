@@ -7,18 +7,18 @@ import {
   UseGuards,
 } from '@nestjs/common'
 //
-import { UsersService } from '../users/users.service'
+import { UserService } from '../users/user.service'
 import { LoginGuard } from '../common/guards/login.guard'
 import { RESTAuthenticatedGuard } from '../common/guards/authenticated.guard'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private usersService: UsersService) {}
+  constructor(private userService: UserService) {}
 
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {
-    const { password, salt, ...result } = await this.usersService.findOneById(
+    const { password, salt, ...result } = await this.userService.findOneById(
       req.user.id
     )
     return result
