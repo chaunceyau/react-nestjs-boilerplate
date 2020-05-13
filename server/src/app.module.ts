@@ -8,12 +8,12 @@ import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'graphql/schema.gql'),
-    }),
     AuthModule,
     UserModule,
     PrismaModule,
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'schema.graphql'),
+    }),
   ],
 })
 export class AppModule {}
