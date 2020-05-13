@@ -7,7 +7,6 @@ module.exports = {
   plugins: ['@typescript-eslint/eslint-plugin', 'prettier'],
   extends: [
     'airbnb',
-    'plugin:node/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -20,6 +19,7 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'error',
+    'import/no-default-export': 'on',
     'no-unused-vars': 'warn',
     'no-console': 'off',
     'func-names': 'off',
@@ -29,14 +29,5 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'sort-imports': [
-      'error',
-      {
-        ignoreCase: false,
-        ignoreDeclarationSort: false,
-        ignoreMemberSort: false,
-        memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-      },
-    ],
   },
 }
