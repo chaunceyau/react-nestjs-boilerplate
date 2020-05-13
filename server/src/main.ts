@@ -7,22 +7,25 @@ import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 //
 import { AppModule } from './app.module'
+import { LocalConfigService } from './common/config/config.service'
 
 async function bootstrap() {
+  // redis for sessions
   const RedisStore = connectRedis(session)
   const redisClient = createClient()
 
-  const app = await NestFactory.create(AppModule, {
-    cors: {
-      origin: 'http://localhost:3000',
-      credentials: true,
-    },
+  const app = await NestFactory.create(AppModule)
+
+  const configService = app.get(LocalConfigService)
+  app.enableCors({
+    origin: configService.getCorsOrigin,
+    credentials: true,
   })
 
   app.use(
     session({
       name: 'connect.sid',
-      secret: 'keyboard cat',
+      secret: configService.getCookieSigningKey,
       resave: false,
       saveUninitialized: false,
       cookie: {
