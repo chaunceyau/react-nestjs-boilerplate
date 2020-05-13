@@ -37,9 +37,9 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Body() { username, password: pass }: CreateAccountDto
+    @Body() { username, password }: CreateAccountDto
   ): Promise<User> {
-    return this.accountService.createAccount(username, pass)
+    return this.accountService.createAccount(username, password)
   }
 
   @Get('logout')
