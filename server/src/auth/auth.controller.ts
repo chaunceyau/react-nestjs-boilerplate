@@ -25,8 +25,7 @@ export class AuthController {
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {
-    const user = await this.userService.findOneById(req.user.id)
-    return user
+    return this.userService.findOneById(req.user.id)
   }
 
   @UseGuards(LoginGuard)

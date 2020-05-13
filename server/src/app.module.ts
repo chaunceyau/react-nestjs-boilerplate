@@ -4,8 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 //
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
-import { PrismaModule } from './prisma/prisma.module';
-import { AccountModule } from './account/account.module';
+import { PrismaModule } from './prisma/prisma.module'
+import { AccountModule } from './account/account.module'
 
 @Module({
   imports: [

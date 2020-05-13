@@ -1,4 +1,8 @@
-import { Injectable, BadRequestException } from '@nestjs/common'
+import {
+  Injectable,
+  BadRequestException,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { genSalt, hash } from 'bcrypt'
 import * as cuid from 'cuid'
 //
@@ -27,10 +31,46 @@ export class AccountService {
     }
   }
 
+  async changePassword(
+    id: string,
+    originalPassword: string,
+    newPassword: string
+  ) {
+    try {
+      const user = await this.prisma.user.findOne({
+        where: { id },
+      })
+      const { password: hashedOriginalPassword } = await this.hashPassword(
+        originalPassword,
+        user.salt
+      )
+      if (hashedOriginalPassword !== user.password)
+        throw new UnauthorizedException('Original password incorrect.')
+      //
+      const {
+        password: hashedNewPassword,
+        salt: newSalt,
+      } = await this.hashPassword(newPassword)
+
+      await this.prisma.user.update({
+        where: { id },
+        data: {
+          password: hashedNewPassword,
+          salt: newSalt,
+        },
+      })
+    } catch (err) {
+      throw new BadRequestException('Failed changing password.')
+    }
+  }
+
   async hashPassword(
     password: string,
     salt?: string
-  ): Promise<{ password: string; salt: string }> {
+  ): Promise<{
+    password: string
+    salt: string
+  }> {
     if (salt) {
       const hashedPassword = await hash(password, salt)
       return { salt, password: hashedPassword }
