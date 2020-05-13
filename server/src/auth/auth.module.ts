@@ -6,10 +6,12 @@ import { LocalStrategy } from './util/local.strategy'
 import { UserModule } from '../user/user.module'
 import { AuthController } from './auth.controller'
 import { SessionSerializer } from './util/session.serializer'
+import { PrismaModule } from 'src/prisma/prisma.module'
 
 @Module({
   imports: [
     UserModule,
+    PrismaModule,
     PassportModule.register({
       session: true,
     }),

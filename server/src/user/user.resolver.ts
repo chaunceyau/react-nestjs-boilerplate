@@ -1,6 +1,6 @@
-import { Resolver, Query, Args, Int } from '@nestjs/graphql'
+import { Resolver, Query, Args } from '@nestjs/graphql'
 import { UseGuards } from '@nestjs/common'
-
+//
 import { User } from './models/user.model'
 import { UserService } from './user.service'
 import { GraphQLAuthenticatedGuard } from '../common/guards/authenticated.guard'
@@ -11,7 +11,7 @@ export class UserResolver {
 
   @UseGuards(GraphQLAuthenticatedGuard)
   @Query(_returns => User)
-  async user(@Args('id', { type: () => Int }) id: number) {
+  async user(@Args('id') id: string) {
     return this.userService.findOneById(id)
   }
 }

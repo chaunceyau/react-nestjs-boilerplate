@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { hash } from 'bcrypt'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 //
-import { UserService } from '../user/user.service'
+import { PrismaService } from '../prisma/prisma.service'
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(private prisma: PrismaService) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.userService.findByUsername(username)
+    const user = await this.prisma.user.findOne({ where: { username } })
     if (!user) throw new UnauthorizedException()
     const hashedPassword = await hash(password, user.salt)
     if (user?.password === hashedPassword) {

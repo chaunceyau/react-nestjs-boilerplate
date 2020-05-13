@@ -18,10 +18,8 @@ export class AuthController {
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {
-    const { password, salt, ...result } = await this.userService.findOneById(
-      req.user.id
-    )
-    return result
+    const user = await this.userService.findOneById(req.user.id)
+    return user
   }
 
   @UseGuards(LoginGuard)

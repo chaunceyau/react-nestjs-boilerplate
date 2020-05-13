@@ -3,10 +3,10 @@
 # ------------------------------------------------------
 
 type User {
-  id: Int!
-  username: String
+  id: String!
+  username: String!
 }
 
 type Query {
-  user(id: Int!): User!
+  user(id: String!): User!
 }
