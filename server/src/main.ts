@@ -2,12 +2,11 @@ import { createClient } from 'redis'
 import { NestFactory } from '@nestjs/core'
 import { ValidationPipe } from '@nestjs/common'
 //
-import * as csurf from 'csurf'
+// import * as csurf from 'csurf'
 import * as helmet from 'helmet'
 import * as passport from 'passport'
 import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
-import * as cookieParser from 'cookie-parser'
 //
 import { AppModule } from './app.module'
 import { LocalConfigService } from './common/config/config.service'
@@ -20,33 +19,32 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   const configService = app.get(LocalConfigService)
+
+  app.use(helmet())
+
   app.enableCors({
-    origin: configService.corsOrigin,
+    origin: [configService.corsOrigin, 'https://74a8a0ce.ngrok.io'],
     credentials: true,
   })
 
-  app.use(helmet())
   app.use(
     session({
-      // key: 'sessionid',
       name: 'sessionid',
       secret: configService.cookieSigningKey,
       resave: false,
       saveUninitialized: false,
-      cookie: {
-        secure: false, // fix
-        httpOnly: false, // fix
-        // sameSite: 'lax',
-        maxAge: configService.cookieMaxAge,
-      },
+      cookie: configService.cookieOptions,
       store: new RedisStore({ client: redisClient }),
     })
   )
+  // TODO: instead of csurf, let's enforce JSON only communication?
+  // 👀 potential problem - multipart form data?
+  // https://github.com/pillarjs/understanding-csrf
   // app.use(csurf())
 
   app.use(passport.initialize())
   app.use(passport.session())
-  
+
   app.useGlobalPipes(new ValidationPipe())
 
   await app.listen(5000)

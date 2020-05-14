@@ -10,6 +10,7 @@ export default {
     PORT: Joi.number().default(5000),
     DATABASE_URL: Joi.string().required(),
     COOKIE_SIGNING_SECRET: Joi.string().required(),
+    FRONTEND_URL: Joi.string().required(),
   }),
   load: [configuration],
 }

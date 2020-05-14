@@ -22,15 +22,6 @@ export class AuthController {
     private accountService: AccountService
   ) {}
 
-  @Get('w')
-  // w(@Request() req, @Response() res) {
-  w(@Request() req) {
-    const token = req.csrfToken()
-    // res.cookie('X-CSRF-Token', token)
-    console.log(token)
-    return {}
-  }
-
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {

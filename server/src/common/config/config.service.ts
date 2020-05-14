@@ -25,4 +25,26 @@ export class LocalConfigService {
   get cookieMaxAge() {
     return this.configService.get('COOKIE_MAX_AGE')
   }
+
+  /**
+   *
+   */
+  get cookieOptions() {
+    const inDevelopment =
+      this.configService.get('NODE_ENV').toLowerCase() !== 'production'
+
+    if (inDevelopment)
+      return {
+        secure: false,
+        httpOnly: false,
+        maxAge: this.cookieMaxAge,
+      }
+
+    return {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: this.cookieMaxAge,
+    }
+  }
 }
