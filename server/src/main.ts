@@ -23,7 +23,12 @@ async function bootstrap() {
   app.use(helmet())
 
   app.enableCors({
-    origin: [configService.corsOrigin, 'https://74a8a0ce.ngrok.io'],
+    origin: 'http://localhost:3000',
+    // origin: [
+    //   'http://localhost:3000',
+    //   configService.corsOrigin,
+    //   'https://74a8a0ce.ngrok.io',
+    // ],
     credentials: true,
   })
 

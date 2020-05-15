@@ -9,4 +9,5 @@ type User {
 
 type Query {
   user(id: String!): User!
+  currentUser: User!
 }

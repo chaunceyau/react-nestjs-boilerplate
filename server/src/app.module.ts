@@ -20,6 +20,10 @@ import ConfigModuleOptions from './common/config/config.options'
     ConfigModule.forRoot(ConfigModuleOptions),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'schema.graphql'),
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }),
   ],
   providers: [LocalConfigService],

@@ -8,7 +8,7 @@ export const RESTUser = createParamDecorator(
 
 export const GraphQLUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext): ResponseObjectUser =>
-    GqlExecutionContext.create(ctx).getContext().getRequest().user
+    GqlExecutionContext.create(ctx).getContext().req.user
 )
 
 export interface ResponseObjectUser {

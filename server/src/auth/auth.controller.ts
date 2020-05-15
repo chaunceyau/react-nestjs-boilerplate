@@ -41,9 +41,8 @@ export class AuthController {
     return this.accountService.createAccount(username, password)
   }
 
-  @Get('logout')
-  logout(@Request() req, @Response() res) {
+  @Post('logout')
+  logout(@Request() req) {
     req.logout()
-    res.redirect('/home')
   }
 }
