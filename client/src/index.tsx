@@ -6,6 +6,7 @@ import './assets/styles/index.css'
 import App from './modules/app/app'
 import * as serviceWorker from './modules/app/serviceWorker'
 import AppProviders from './modules/common/app-providers'
+import { Pay } from './modules/stripe/pay'
 
 ReactDOM.render(
   <AppProviders>

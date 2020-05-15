@@ -3,6 +3,7 @@ import { Link, useNavigate } from '@reach/router'
 import { useForm } from 'react-hook-form'
 
 import { useAuth } from '../context/auth-context'
+import { TextInput } from '../components/text-input'
 
 export interface ILoginProps {
   path?: string
@@ -36,76 +37,47 @@ function LoginForm() {
       setMutationError(err)
     }
   }
-
   return (
-    <div>
-      <div>
-        <div>
-          <div>
-            <div>
-              <div>
-                <div>
-                  <div>
-                    {/* <img
-                      alt="Boilerplate Logo"
-                      src={require('../../assets/boilerplate_logo.png')}
-                      className="avatar img-fluid"
-                      style={{ height: 80 }}
-                    /> */}
-                  </div>
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <fieldset disabled={false}>
-                      <div>
-                        <label htmlFor="email">Email</label>
-                        <input
-                          type="email"
-                          name="email"
-                          id="email"
-                          placeholder="Enter your email"
-                          ref={register}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="password">Password</label>
-                        <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          placeholder="Enter your password"
-                          ref={register}
-                        />
-                      </div>
-                      {/* {mutationError && (
-                        <div className="row">
-                          {mutationError?.graphQLErrors?.map((error: any) => {
-                            return (
-                              <p className="text-danger px-4">
-                                {error.message}
-                              </p>
-                            )
-                          })}
-                        </div>
-                      )} */}
-                      <div>
-                        <div>
-                          <button type="submit">Login</button>
-                        </div>
-                        <div>
-                          <Link to="/">Forgot Password?</Link>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </form>
-                </div>
-              </div>
+    <div className="bg-gray-500 min-h-screen flex justify-center items-center">
+      <div className="w-full max-w-xs h-full">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <fieldset disabled={false}>
+            <TextInput
+              register={register}
+              title="email"
+              placeholder="example@test.com"
+              error={null}
+              wrapperClasses="mb-4"
+            />
+            <TextInput
+              register={register}
+              title="password"
+              placeholder="*******"
+              error={{ message: 'you fucked up' }}
+              wrapperClasses="mb-4"
+            />
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                Sign In
+              </button>
+              <a
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                href="#"
+              >
+                Forgot Password?
+              </a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div>
-          <small>© 2020 Application, Inc. All rights reserved.</small>
-        </div>
+          </fieldset>
+        </form>
+        <p className="text-center text-gray-500 text-xs">
+          &copy;2020 Acme Corp. All rights reserved.
+        </p>
       </div>
     </div>
   )
