@@ -1,21 +1,20 @@
 import React from 'react'
+import useSWR from 'swr'
 import { useQuery } from '@apollo/react-hooks'
 //
-import {
-  login,
-  register,
-  logout,
-  QUERY_CURRENT_USER
-} from '../auth/auth-client'
+import * as authClient from '../auth/auth-client'
 import { LoadingIndicator } from '../misc/loading-indicator'
 
 const AuthContext = React.createContext()
 
 function AuthProvider(props) {
+  // const { data, error } = useSWR('http://localhost:5000/')
   const { loading, data, error, refetch, called, updateQuery } = useQuery(
-    QUERY_CURRENT_USER,
+    authClient.QUERY_CURRENT_USER,
     { fetchPolicy: 'network-only' }
   )
+
+  console.log('-> ', data)
 
   const firstAttemptIncomplete = called && loading && !data
   if (firstAttemptIncomplete) {
@@ -30,11 +29,14 @@ function AuthProvider(props) {
     }
   }
 
-  const login = form => login(form).then(refetch)
-  const register = form => register(form)
+  const login = form => authClient.login(form).then(refetch)
+  const register = form => authClient.register(form)
 
   const logout = () =>
-    logout().then(() => updateQuery(_prev => ({ currentUser: null })))
+    authClient.logout().then(() => {
+      console.log('THEN')
+      updateQuery(_prev => ({ currentUser: null }))
+    })
 
   return (
     <AuthContext.Provider

@@ -1,6 +1,8 @@
 import { gql } from 'apollo-boost'
 import { useMutation } from '@apollo/react-hooks'
 //
+import { post } from 'axios'
+//
 import { client } from '../common/local-apollo-client'
 
 export const QUERY_CURRENT_USER = gql`
@@ -10,12 +12,24 @@ export const QUERY_CURRENT_USER = gql`
     }
   }
 `
+
 function handleUserResponse({ data }) {
+  console.log("012ek")
   if (!data) return { data: null }
+  console.log("012ekr032l")
   return data.login
 }
 
 function login({ email, password }) {
+  console.log("here")
+  return post(
+    'http://localhost:5000/auth/login',
+    { username: email, password },
+    { withCredentials: true }
+  )
+    .then(handleUserResponse)
+    .catch(err => Promise.reject(err))
+
   return client
     .mutate({
       mutation: MUTATION_LOGIN_USER,
@@ -46,13 +60,17 @@ export function useRegistration() {
 }
 
 function logout() {
-  return client.mutate({
-    mutation: gql`
-      mutation LogoutUser {
-        logout
-      }
-    `
+  return post('http://localhost:5000/auth/logout', null, {
+    withCredentials: true
   })
+  // window.location.href = 'http://localhost:5000/auth/logout'
+  // return client.mutate({
+  //   mutation: gql`
+  //     mutation LogoutUser {
+  //       logout
+  //     }
+  //   `
+  // })
 }
 
 const MUTATION_REGISTER_USER = gql`

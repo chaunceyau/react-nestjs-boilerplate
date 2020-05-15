@@ -82,7 +82,7 @@ function LoginForm() {
                           ref={register}
                         />
                       </div>
-                      {mutationError && (
+                      {/* {mutationError && (
                         <div className="row">
                           {mutationError?.graphQLErrors?.map((error: any) => {
                             return (
@@ -92,7 +92,7 @@ function LoginForm() {
                             )
                           })}
                         </div>
-                      )}
+                      )} */}
                       <div className="row mt-2">
                         <div className="col">
                           <button type="submit" className="btn btn-primary">
