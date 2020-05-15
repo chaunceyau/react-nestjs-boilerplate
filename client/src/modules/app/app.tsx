@@ -1,5 +1,5 @@
 import React from 'react'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { ApolloProvider } from '@apollo/client'
 //
 import { AuthenticatedApp } from './authenticated-app'
 import { UnauthenticatedApp } from './unauthenticated-app'

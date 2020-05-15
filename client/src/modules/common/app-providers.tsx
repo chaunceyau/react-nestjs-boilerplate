@@ -1,5 +1,5 @@
 import React from 'react'
-import { ApolloProvider } from '@apollo/react-hooks'
+import { ApolloProvider } from '@apollo/client'
 //
 import { AuthProvider } from '../context/auth-context'
 import { UserProvider } from '../context/user-context'

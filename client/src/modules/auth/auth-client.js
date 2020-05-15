@@ -1,6 +1,4 @@
-import { gql } from 'apollo-boost'
-import { useMutation } from '@apollo/react-hooks'
-//
+import { useMutation, gql } from '@apollo/client'
 import { post } from 'axios'
 //
 import { client } from '../common/local-apollo-client'
@@ -14,14 +12,14 @@ export const QUERY_CURRENT_USER = gql`
 `
 
 function handleUserResponse({ data }) {
-  console.log("012ek")
+  console.log('012ek')
   if (!data) return { data: null }
-  console.log("012ekr032l")
+  console.log('012ekr032l')
   return data.login
 }
 
 function login({ email, password }) {
-  console.log("here")
+  console.log('here')
   return post(
     'http://localhost:5000/auth/login',
     { username: email, password },
