@@ -11,25 +11,11 @@ function App() {
   const user = useUser()
   return (
     <ApolloProvider client={client}>
-      <div className="d-flex flex-column h-100">
+      <div>
         <Navigation user={user} />
-        <MainApp user={user} />
+        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       </div>
     </ApolloProvider>
-  )
-}
-
-function MainApp(props: { user: any }) {
-  if (props.user)
-    return (
-      <div className="container py-2">
-        <AuthenticatedApp />
-      </div>
-    )
-  return (
-    <div style={{ height: '100vh' }}>
-      <UnauthenticatedApp />
-    </div>
   )
 }
 

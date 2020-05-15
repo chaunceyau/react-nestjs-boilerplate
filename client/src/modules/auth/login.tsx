@@ -12,7 +12,7 @@ export interface ILoginProps {
 export default class Login extends React.PureComponent<ILoginProps> {
   render() {
     return (
-      <div className="bg-light login-form-container d-flex align-items-center">
+      <div>
         <LoginForm />
       </div>
     )
@@ -24,7 +24,6 @@ function LoginForm() {
   const navigate = useNavigate()
   // TODO: refactor login function to be hook...
   const [mutationError, setMutationError] = React.useState()
-
 
   const { register, handleSubmit } = useForm()
 
@@ -39,14 +38,14 @@ function LoginForm() {
   }
 
   return (
-    <div className="container mb-5">
-      <div className="row mb-2">
-        <div className="col-md-12 d-flex flex-column justify-content-center">
-          <div className="row">
-            <div className="mx-auto login-form-width">
-              <div className="card rounded shadow shadow-sm">
-                <div className="card-body p-4">
-                  <div className="pl-4 pr-4 pb-4 pt-2 text-center">
+    <div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
                     {/* <img
                       alt="Boilerplate Logo"
                       src={require('../../assets/boilerplate_logo.png')}
@@ -56,28 +55,22 @@ function LoginForm() {
                   </div>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset disabled={false}>
-                      <div className="form-group">
-                        <label htmlFor="email" className="font-weight-bold">
-                          Email
-                        </label>
+                      <div>
+                        <label htmlFor="email">Email</label>
                         <input
                           type="email"
                           name="email"
                           id="email"
-                          className="form-control shadow-sm"
                           placeholder="Enter your email"
                           ref={register}
                         />
                       </div>
-                      <div className="form-group mb-4">
-                        <label htmlFor="password" className="font-weight-bold">
-                          Password
-                        </label>
+                      <div>
+                        <label htmlFor="password">Password</label>
                         <input
                           type="password"
                           name="password"
                           id="password"
-                          className="form-control shadow-sm"
                           placeholder="Enter your password"
                           ref={register}
                         />
@@ -93,16 +86,12 @@ function LoginForm() {
                           })}
                         </div>
                       )} */}
-                      <div className="row mt-2">
-                        <div className="col">
-                          <button type="submit" className="btn btn-primary">
-                            Login
-                          </button>
+                      <div>
+                        <div>
+                          <button type="submit">Login</button>
                         </div>
-                        <div className="col d-flex align-items-center">
-                          <Link to="/" className="font-weight-bold">
-                            Forgot Password?
-                          </Link>
+                        <div>
+                          <Link to="/">Forgot Password?</Link>
                         </div>
                       </div>
                     </fieldset>
@@ -113,11 +102,9 @@ function LoginForm() {
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col text-center">
-          <small className="text-secondary">
-            © 2020 Application, Inc. All rights reserved.
-          </small>
+      <div>
+        <div>
+          <small>© 2020 Application, Inc. All rights reserved.</small>
         </div>
       </div>
     </div>

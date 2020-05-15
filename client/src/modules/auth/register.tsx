@@ -11,7 +11,7 @@ export interface IRegisterProps {
 export default class Register extends React.PureComponent<IRegisterProps> {
   render() {
     return (
-      <div className="bg-light login-form-container d-flex align-items-center">
+      <div>
         <RegisterForm />
       </div>
     )
@@ -35,55 +35,46 @@ function RegisterForm() {
   }
 
   return (
-    <div className="container mb-5">
-      <div className="row mb-2">
-        <div className="col-md-12 d-flex flex-column justify-content-center">
-          <div className="row">
-            <div className="mx-auto login-form-width">
-              <div className="card rounded shadow shadow-sm">
-                <div className="card-body p-4">
-                  <div className="pl-4 pr-4 pb-4 pt-2 text-center">
+    <div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
                     {/* <img
                       alt="Boilerplate Logo"
                       src={require('../../assets/Boilerplate_logo.png')}
-                      className="avatar img-fluid"
+                      "
                       style={{ height: 80 }}
                     /> */}
                   </div>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset disabled={loading}>
-                      <div className="form-group">
-                        <label htmlFor="email" className="font-weight-bold">
-                          Email
-                        </label>
+                      <div>
+                        <label htmlFor="email">Email</label>
                         <input
                           type="email"
                           name="email"
                           id="email"
-                          className="form-control shadow-sm"
                           placeholder="Enter your email"
                           ref={register}
                         />
                       </div>
-                      <div className="form-group mb-3">
-                        <label htmlFor="password" className="font-weight-bold">
-                          Password
-                        </label>
+                      <div>
+                        <label htmlFor="password">Password</label>
                         <input
                           minLength={6}
                           id="password"
                           type="password"
                           name="password"
-                          className="form-control shadow-sm"
                           placeholder="Enter your password"
                           ref={register}
                         />
                       </div>
-                      <div className="form-group mb-4">
-                        <label
-                          htmlFor="confirm_password"
-                          className="font-weight-bold"
-                        >
+                      <div>
+                        <label htmlFor="confirm_password">
                           Confirm Password
                         </label>
                         <input
@@ -91,25 +82,18 @@ function RegisterForm() {
                           type="password"
                           id="confirm_password"
                           name="confirm_password"
-                          className="form-control shadow-sm"
                           placeholder="Confirm your password"
                           ref={register}
                         />
                       </div>
                       {error && (
-                        <div className="row">
+                        <div>
                           {error.graphQLErrors.map(error => {
-                            return (
-                              <p className="text-danger px-4">
-                                {error.message}
-                              </p>
-                            )
+                            return <p>{error.message}</p>
                           })}
                         </div>
                       )}
-                      <button type="submit" className="btn btn-primary w-100">
-                        Register
-                      </button>
+                      <button type="submit">Register</button>
                     </fieldset>
                   </form>
                 </div>
@@ -118,11 +102,9 @@ function RegisterForm() {
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col text-center">
-          <small className="text-secondary">
-            © 2020 Application, Inc. All rights reserved.
-          </small>
+      <div>
+        <div>
+          <small>© 2020 Application, Inc. All rights reserved.</small>
         </div>
       </div>
     </div>
