@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 //
+import './assets/styles/index.css'
+//
 import App from './modules/app/app'
 import * as serviceWorker from './modules/app/serviceWorker'
 import AppProviders from './modules/common/app-providers'
