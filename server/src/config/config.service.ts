@@ -80,4 +80,18 @@ export class LocalConfigService {
   get stripeApiVersion() {
     return this.configService.get('stripe.STRIPE_API_VERSION')
   }
+
+  /*
+   *
+   */
+  get monthlySubscriptionPriceId() {
+    return this.configService.get('stripe.STRIPE_SUBSCRIPTION_MONTHLY_PRICE_ID')
+  }
+
+  /*
+   *
+   */
+  get annualSubscriptionPriceId() {
+    return this.configService.get('stripe.STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID')
+  }
 }

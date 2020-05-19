@@ -7,7 +7,19 @@ type User {
   username: String!
 }
 
+type CreateSubscriptionResponse {
+  success: Boolean!
+}
+
 type Query {
   user(id: String!): User!
   currentUser: User!
+}
+
+type Mutation {
+  upgradeToPremium(input: CreateSubscriptionInput!): CreateSubscriptionResponse!
+}
+
+input CreateSubscriptionInput {
+  plan: String!
 }

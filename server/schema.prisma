@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -7,9 +8,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model StripeInfo {
+  customer_id       String? @unique
+  id                String  @id
+  last_4            Int?
+  payment_method_id String?
+  subscription_id   String? @unique
+  user              User
+}
+
 model User {
-  id       String @id
-  password String
-  salt     String
-  username String @unique
+  current_period_end DateTime?
+  id                 String           @id
+  password           String
+  salt               String
+  stripe_info_id     String?
+  subscription_type  SubscriptionType @default(FREE_TIER)
+  username           String           @unique
+  stripe_info        StripeInfo?      @relation(fields: [stripe_info_id], references: [id])
+}
+
+enum SubscriptionType {
+  FREE_TIER
+  PREMIUM_SUBSCRIBER
+  ENTERPRISE_SUBSCRIBER
 }

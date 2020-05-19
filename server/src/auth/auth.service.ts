@@ -17,12 +17,15 @@ export class AuthService {
    */
   async validateUser(username: string, rawPassword: string): Promise<any> {
     const user = await this.prisma.user.findOne({ where: { username } })
+    
     if (!user) throw new UnauthorizedException()
+
     const { password, salt, ...result } = user
     const { password: hashedPassword } = await this.accountService.hashPassword(
       rawPassword,
       salt
     )
-    return password === hashedPassword ? { id: result.id } : null
+    
+    return password === hashedPassword ? result : null
   }
 }
