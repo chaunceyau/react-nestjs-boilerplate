@@ -1,15 +1,12 @@
-import { join } from 'path'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 //
 import { UserModule } from './user/user.module'
 import { AuthModule } from './auth/auth.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { AccountModule } from './account/account.module'
-import { LocalConfigService } from './common/config/config.service'
-//
-import ConfigModuleOptions from './common/config/config.options'
+import { LocalConfigModule } from './config/config.module'
+import { LocalConfigService } from './config/config.service'
 
 @Module({
   imports: [
@@ -17,15 +14,15 @@ import ConfigModuleOptions from './common/config/config.options'
     UserModule,
     PrismaModule,
     AccountModule,
-    ConfigModule.forRoot(ConfigModuleOptions),
-    GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'schema.graphql'),
-      cors: {
-        origin: 'http://localhost:3000',
-        credentials: true,
-      },
-    }),
+    LocalConfigModule,
+    GraphQLModule.forRootAsync({
+      imports: [LocalConfigModule],
+      useFactory: (localConfigService: LocalConfigService) => ({
+        autoSchemaFile: localConfigService.autoSchemaFile,
+        cors: localConfigService.corsConfig,
+      }),
+      inject: [LocalConfigService],
+    })
   ],
-  providers: [LocalConfigService],
 })
 export class AppModule {}

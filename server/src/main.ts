@@ -9,7 +9,7 @@ import * as session from 'express-session'
 import * as connectRedis from 'connect-redis'
 //
 import { AppModule } from './app.module'
-import { LocalConfigService } from './common/config/config.service'
+import { LocalConfigService } from './config/config.service'
 
 async function bootstrap() {
   // redis for sessions
@@ -22,15 +22,7 @@ async function bootstrap() {
 
   app.use(helmet())
 
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    // origin: [
-    //   'http://localhost:3000',
-    //   configService.corsOrigin,
-    //   'https://74a8a0ce.ngrok.io',
-    // ],
-    credentials: true,
-  })
+  app.enableCors(configService.corsConfig)
 
   app.use(
     session({

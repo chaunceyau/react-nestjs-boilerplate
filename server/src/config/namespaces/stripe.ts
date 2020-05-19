@@ -1,0 +1,10 @@
+import { registerAs } from '@nestjs/config'
+
+export default registerAs('stripe', () => ({
+    // STRIPE
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_SUBSCRIPTION_PRODUCT_ID: process.env.STRIPE_SUBSCRIPTION_PRODUCT_ID,
+    STRIPE_SUBSCRIPTION_MONTHLY_PRICE_ID: process.env.STRIPE_SUBSCRIPTION_MONTHLY_PRICE_ID,
+    STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID: process.env.STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID,
+  }))
+  
