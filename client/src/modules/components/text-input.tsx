@@ -6,7 +6,8 @@ export function TextInput({
   title,
   placeholder,
   error, 
-  wrapperClasses
+  wrapperClasses,
+  labelTextColor
 }: {
   register: any
   title: string
@@ -14,12 +15,13 @@ export function TextInput({
   error: {
       message: string
   } | null,
-  wrapperClasses: string
+  wrapperClasses?: string,
+  labelTextColor?: string
 }) {
   return (
     <div className={wrapperClasses}>
       <label
-        className="block text-gray-700 text-sm font-bold mb-2"
+        className={`block text-sm font-bold mb-2  ${labelTextColor || 'text-gray-700'} `}
         htmlFor={title}
       >
         {capitalizeFirstLetter(title)}

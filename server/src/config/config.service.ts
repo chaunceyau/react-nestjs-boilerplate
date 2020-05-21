@@ -94,4 +94,11 @@ export class LocalConfigService {
   get annualSubscriptionPriceId() {
     return this.configService.get('stripe.STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID')
   }
+  
+  /*
+   *
+   */
+  get billingPortalRedirectURL() {
+    return this.configService.get('stripe.BILLING_PORTAL_REDIRECT_URL')
+  }
 }

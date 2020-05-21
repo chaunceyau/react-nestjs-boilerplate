@@ -21,7 +21,7 @@ export class AuthController {
     private userService: UserService,
     private accountService: AccountService
   ) {}
-
+  
   @UseGuards(RESTAuthenticatedGuard)
   @Get('whoami')
   async whoami(@Request() req) {

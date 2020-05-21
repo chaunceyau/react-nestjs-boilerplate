@@ -12,8 +12,6 @@ export const RESTUser = createParamDecorator<ResponseObjectUser>(
 )
 
 export const GraphQLUser = createParamDecorator<ResponseObjectUser>(
-  (data: unknown, ctx: ExecutionContext) => {
-    console.log(GqlExecutionContext.create(ctx).getContext().req.user)
-    return GqlExecutionContext.create(ctx).getContext().req.user
-  }
+  (data: unknown, ctx: ExecutionContext) =>
+    GqlExecutionContext.create(ctx).getContext().req.user
 )

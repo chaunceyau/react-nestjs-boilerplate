@@ -3,24 +3,30 @@ import { Router } from '@reach/router'
 //
 import Logout from '../auth/logout'
 import { Dashboard } from '../dashboard'
-import { useUser } from '../context/user-context'
-import { Navigation } from '../navigation/navigation'
+import { Frame } from '../components/frame'
+import { Checkout } from '../stripe/checkout'
+import { Navigation } from '../components/top-navigation'
+import { AccountDetails } from '../account/account-details'
+import { SubscriptionDetails } from '../account/subscription'
+import { Authenticated404 } from '../common/404-authenticated'
 
 export interface IAuthenticatedAppProps {}
 
 export function AuthenticatedApp(props: IAuthenticatedAppProps) {
-  const user = useUser()
   return (
     <>
-      <Navigation user={user} />
+      <Navigation />
       <Router>
-        <Dashboard path="/dashboard" />
-        <Logout path="/logout" />
-        <LoggedIn404 default />
+        <Dashboard path="dashboard" />
+        <Logout path="logout" />
+        <Checkout path="checkout" />
+        <Frame path="account">
+          <Dashboard path="/" />
+          <AccountDetails path="details" />
+          <SubscriptionDetails path="subscription" />
+        </Frame>
+        <Authenticated404 default />
       </Router>
     </>
   )
 }
-const LoggedIn404 = (props: any) => (
-  <span>404 page - auth route - not found</span>
-)

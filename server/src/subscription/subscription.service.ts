@@ -8,9 +8,18 @@ import { LocalConfigService } from '../config/config.service'
 @Injectable()
 export class SubscriptionService {
   constructor(
-    @InjectStripe() private readonly stripeClient: Stripe,
-    private readonly localConfigService: LocalConfigService
+    private readonly localConfigService: LocalConfigService,
+    @InjectStripe() private readonly stripeClient: Stripe
   ) {}
+
+  async createBillingPortalSession({ customer_id }) {
+    const session = await this.stripeClient.billingPortal.sessions.create({
+      customer: customer_id,
+      return_url: this.localConfigService.billingPortalRedirectURL,
+    })
+
+    return session.url
+  }
 
   async createSubscription({ payment_method_id, customer_id, price_id }) {
     // Attach the payment method to the customer

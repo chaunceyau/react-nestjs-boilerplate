@@ -1,5 +1,5 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql'
-import { UseGuards } from '@nestjs/common'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import { UseGuards, Response } from '@nestjs/common'
 import { GraphQLError } from 'graphql'
 //
 import { stripeDateToISO } from '../common/utils'
@@ -21,6 +21,26 @@ export class SubscriptionResolver {
     private prisma: PrismaService,
     private subscriptionService: SubscriptionService
   ) {}
+
+  @UseGuards(GraphQLAuthenticatedGuard)
+  @Query(_returns => String)
+  async getBillingPortalSessionURL(
+    @GraphQLUser() user: ResponseObjectUser,
+    @Response() res
+  ) {
+    const db_user = await this.prisma.user.findOne({
+      where: { id: user.id },
+      select: {
+        stripe_info: true,
+      },
+    })
+    const url = await this.subscriptionService.createBillingPortalSession({
+      customer_id: db_user.stripe_info.customer_id,
+    })
+
+    res.redirect(url)
+    return url
+  }
 
   @UseGuards(GraphQLAuthenticatedGuard)
   @Mutation(_returns => CreateSubscriptionResponse)

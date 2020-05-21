@@ -22,14 +22,21 @@ export class AccountService {
   async createAccount(username: string, password: string): Promise<User> {
     if (!username || !password)
       throw new Error('You must provide username & password')
-      
+
     const stripe_user = await this.stripeClient.customers.create({
       email: username,
     })
+    
     if (!stripe_user)
       throw new InternalServerErrorException(
         'Failed creating account during stripe linking.'
       )
+
+    const subscription = await this.stripeClient.subscriptions.create({
+      customer: stripe_user.id,
+      items: [{ price: 'price_HJg3tLzLSojuaP' }],
+      expand: ['latest_invoice.payment_intent'],
+    })
 
     const { salt, password: hashedPassword } = await this.hashPassword(password)
     try {
@@ -48,6 +55,7 @@ export class AccountService {
             create: {
               id: cuid(),
               customer_id: stripe_user.id,
+              subscription_id: subscription.id,
             },
           },
         },
