@@ -42,12 +42,12 @@ export function Navigation(props: INavigationProps) {
           </Link>
         </div>
         <div>
-          <a
-            href="#"
+          <Link
+            to="/account"
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-500 hover:bg-white mt-4 lg:mt-0"
           >
             My Account
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

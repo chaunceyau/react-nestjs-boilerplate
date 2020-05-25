@@ -8,13 +8,13 @@ import { Button } from '../components/button'
 //
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_X5U7Ozit1B3vyzqdvDQx6dQz00cZrffvCw')
+// const stripePromise = loadStripe('pk_test_X5U7Ozit1B3vyzqdvDQx6dQz00cZrffvCw')
 
 export function Pay() {
   return (
-    <Elements stripe={stripePromise}>
+    // <Elements stripe={stripePromise}>
       <CardSection />
-    </Elements>
+    // </Elements> 
   )
 }
 

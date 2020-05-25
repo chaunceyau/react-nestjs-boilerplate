@@ -14,7 +14,7 @@ export function Card(props: CardProps) {
     return (
       <div className={`bg-white rounded shadow px-6 pt-4 pb-6 ${bottom}`}>
         <div className="flex justify-between">
-          <h2 className="text-xl mb-2">{props.title}</h2>
+          <h2 className="text-xl">{props.title}</h2>
           {props.cta}
         </div>
         {props.children}

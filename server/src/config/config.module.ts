@@ -27,6 +27,10 @@ import stripe from './namespaces/stripe'
         STRIPE_SUBSCRIPTION_PRODUCT_ID: string().required(),
         STRIPE_SUBSCRIPTION_MONTHLY_PRICE_ID: string().required(),
         STRIPE_SUBSCRIPTION_ANNUAL_PRICE_ID: string().required(),
+        STRIPE_BILLING_PORTAL_REDIRECT_URL: string().required(),
+        STRIPE_CHECKOUT_SUCCESS_REDIRECT_URL: string().required(),
+        STRIPE_CHECKOUT_CANCEL_REDIRECT_URL: string().required(),
+        //
       }),
     }),
   ],

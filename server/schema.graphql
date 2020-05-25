@@ -18,6 +18,7 @@ type Query {
 }
 
 type Mutation {
+  createCheckoutSession: String!
   upgradeToPremium(input: CreateSubscriptionInput!): CreateSubscriptionResponse!
 }
 

@@ -12,6 +12,23 @@ export class SubscriptionService {
     @InjectStripe() private readonly stripeClient: Stripe
   ) {}
 
+  async createCheckoutSession({
+    customer_id,
+    price_id,
+  }: CreateCheckoutSession) {
+    const session = this.stripeClient.checkout.sessions.create({
+      success_url: this.localConfigService.checkoutSuccessRedirectURL,
+      cancel_url: this.localConfigService.checkoutCancelRedirectURL,
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      customer: customer_id,
+      line_items: [{ price: price_id, quantity: 1 }],
+      // expand: ['latest_invoice.payment_intent'],
+    })
+
+    return session
+  }
+
   async createBillingPortalSession({ customer_id }) {
     const session = await this.stripeClient.billingPortal.sessions.create({
       customer: customer_id,
@@ -52,4 +69,9 @@ export class SubscriptionService {
     else if (plan.toString() === 'PREMIUM_ANNUAL')
       return this.localConfigService.annualSubscriptionPriceId
   }
+}
+
+interface CreateCheckoutSession {
+  customer_id: string
+  price_id: string
 }

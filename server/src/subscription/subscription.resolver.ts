@@ -24,10 +24,7 @@ export class SubscriptionResolver {
 
   @UseGuards(GraphQLAuthenticatedGuard)
   @Query(_returns => String)
-  async getBillingPortalSessionURL(
-    @GraphQLUser() user: ResponseObjectUser,
-    @Response() res
-  ) {
+  async getBillingPortalSessionURL(@GraphQLUser() user: ResponseObjectUser) {
     const db_user = await this.prisma.user.findOne({
       where: { id: user.id },
       select: {
@@ -38,8 +35,17 @@ export class SubscriptionResolver {
       customer_id: db_user.stripe_info.customer_id,
     })
 
-    res.redirect(url)
     return url
+  }
+
+  // @UseGuards(GraphQLAuthenticatedGuard)
+  @Mutation(_returns => String)
+  async createCheckoutSession(@GraphQLUser() user: ResponseObjectUser) {
+    const session = await this.subscriptionService.createCheckoutSession({
+      customer_id: 'cus_HJvDzca4taypea',
+      price_id: 'price_HHiap36oY3xKKn',
+    })
+    return session.id
   }
 
   @UseGuards(GraphQLAuthenticatedGuard)

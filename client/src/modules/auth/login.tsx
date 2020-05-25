@@ -31,7 +31,7 @@ function LoginForm() {
   async function onSubmit({ email, password }: any, other: any) {
     try {
       // TODO: refactor login function to be hook...
-      await auth.login({ email, password }).then(() => navigate('/dashboard'))
+      await auth.login({ email, password }).then(() => navigate('/account'))
     } catch (err) {
       console.log(err)
       setMutationError(err)

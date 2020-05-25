@@ -4,7 +4,7 @@ interface SubscriptionFeatureProps {}
 
 export function SubscriptionFeature(props: SubscriptionFeatureProps) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mb-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -19,7 +19,7 @@ export function SubscriptionFeature(props: SubscriptionFeatureProps) {
             cy="424"
             r="424"
             transform="translate(483 170)"
-            fill="#d4dadd"
+            fill="rgb(0,255,0,0.15)"
           />
           <g
             id="Group_1"
@@ -33,7 +33,7 @@ export function SubscriptionFeature(props: SubscriptionFeatureProps) {
               height="110"
               rx="27.5"
               transform="translate(699.385 544.246) rotate(45)"
-              fill="#a2acb4"
+              fill="green"
             />
             <rect
               id="Rectangle_2"
@@ -42,12 +42,12 @@ export function SubscriptionFeature(props: SubscriptionFeatureProps) {
               height="110"
               rx="27.5"
               transform="translate(1192.939 485.556) rotate(135)"
-              fill="#a2acb4"
+              fill="green"
             />
           </g>
         </g>
       </svg>
-      <span className="ml-2 text-gray-700">this is current plan</span>
+      <span className="ml-2 text-gray-700 tracking-wide">this is current plan</span>
     </div>
   )
 }

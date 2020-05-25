@@ -7,8 +7,8 @@ import { Frame } from '../components/frame'
 import { Checkout } from '../stripe/checkout'
 import { Navigation } from '../components/top-navigation'
 import { AccountDetails } from '../account/account-details'
-import { SubscriptionDetails } from '../account/subscription'
 import { Authenticated404 } from '../common/404-authenticated'
+import { ManageSubscriptionSection } from '../account/manage-subscription'
 
 export interface IAuthenticatedAppProps {}
 
@@ -23,7 +23,7 @@ export function AuthenticatedApp(props: IAuthenticatedAppProps) {
         <Frame path="account">
           <Dashboard path="/" />
           <AccountDetails path="details" />
-          <SubscriptionDetails path="subscription" />
+          <ManageSubscriptionSection path="subscription" />
         </Frame>
         <Authenticated404 default />
       </Router>
