@@ -3,12 +3,20 @@
 # ------------------------------------------------------
 
 type User {
+  subscription_type: SubscriptionType!
   id: String!
   username: String!
 }
 
+"""Type of subscription account is associated with."""
+enum SubscriptionType {
+  FREE_TIER
+  PREMIUM_SUBSCRIBER
+  ENTERPRISE_SUBSCRIBER
+}
+
 type CreateSubscriptionResponse {
-  success: Boolean!
+  id: String!
 }
 
 type Query {
@@ -18,10 +26,14 @@ type Query {
 }
 
 type Mutation {
-  createCheckoutSession: String!
-  upgradeToPremium(input: CreateSubscriptionInput!): CreateSubscriptionResponse!
+  createCheckoutSession(input: CreateSubscriptionInput!): CreateSubscriptionResponse!
 }
 
 input CreateSubscriptionInput {
-  plan: String!
+  plan: SubscriptionPlan!
+}
+
+enum SubscriptionPlan {
+  PREMIUM_MONTHLY
+  PREMIUM_ANNUAL
 }

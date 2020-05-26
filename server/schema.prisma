@@ -8,24 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model StripeInfo {
-  customer_id       String? @unique
-  id                String  @id
-  last_4            Int?
-  payment_method_id String?
-  subscription_id   String? @unique
-  user              User
-}
-
 model User {
-  current_period_end DateTime?
-  id                 String           @id
-  password           String
-  salt               String
-  stripe_info_id     String?
-  subscription_type  SubscriptionType @default(FREE_TIER)
-  username           String           @unique
-  stripe_info        StripeInfo?      @relation(fields: [stripe_info_id], references: [id])
+  id                     String            @id
+  salt                   String
+  username               String            @unique
+  password               String
+  subscription_type      SubscriptionType?
+  stripe_customer_id     String?           @unique
+  stripe_subscription_id String?           @unique
+  current_period_end     DateTime?
 }
 
 enum SubscriptionType {

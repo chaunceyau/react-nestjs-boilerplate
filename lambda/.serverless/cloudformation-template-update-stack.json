@@ -62,6 +62,12 @@
         "LogGroupName": "/aws/lambda/serverless-functions-dev-checkoutComplete"
       }
     },
+    "DeleteSubscriptionLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/serverless-functions-dev-deleteSubscription"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -176,6 +182,12 @@
                         "CheckoutCompleteLogGroup",
                         "Arn"
                       ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "DeleteSubscriptionLogGroup",
+                        "Arn"
+                      ]
                     }
                   ]
                 }
@@ -192,7 +204,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-functions/dev/1590430396107-2020-05-25T18:13:16.107Z/serverless-functions.zip"
+          "S3Key": "serverless/serverless-functions/dev/1590456557415-2020-05-26T01:29:17.415Z/serverless-functions.zip"
         },
         "FunctionName": "serverless-functions-dev-checkoutComplete",
         "Handler": "s_checkoutComplete.handler",
@@ -210,14 +222,49 @@
         "CheckoutCompleteLogGroup"
       ]
     },
-    "CheckoutCompleteLambdaVersionDKpPC5qzg8uwFLuY8d1DgN6jGRWjb9mk8YMLaU8AWVQ": {
+    "CheckoutCompleteLambdaVersionudyVqStTbba8aoTLYqUBHwWoCcC1dE4xhP4nc7MN4A": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CheckoutCompleteLambdaFunction"
         },
-        "CodeSha256": "4tkU7U2zS41NBj4KCygEaAQugmhFeNboYqngiyceA7U="
+        "CodeSha256": "vIx18yVsUffb8qbDoGNe1XlNA76zgAKJhGegotKHbVI="
+      }
+    },
+    "DeleteSubscriptionLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/serverless-functions/dev/1590456557415-2020-05-26T01:29:17.415Z/serverless-functions.zip"
+        },
+        "FunctionName": "serverless-functions-dev-deleteSubscription",
+        "Handler": "s_deleteSubscription.handler",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 6
+      },
+      "DependsOn": [
+        "DeleteSubscriptionLogGroup"
+      ]
+    },
+    "DeleteSubscriptionLambdaVersionQETmM2Sf1Baf6UeEMQeXJ08Wi524UVsZaeuHXtd3ZLU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "DeleteSubscriptionLambdaFunction"
+        },
+        "CodeSha256": "vIx18yVsUffb8qbDoGNe1XlNA76zgAKJhGegotKHbVI="
       }
     },
     "ApiGatewayRestApi": {
@@ -232,7 +279,7 @@
         "Policy": ""
       }
     },
-    "ApiGatewayResourceCheckoutcomplete": {
+    "ApiGatewayResourceCheckoutDashcomplete": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -241,19 +288,34 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "checkoutComplete",
+        "PathPart": "checkout-complete",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodCheckoutcompletePost": {
+    "ApiGatewayResourceDeleteDashsubscription": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "delete-subscription",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodCheckoutDashcompletePost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "POST",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceCheckoutcomplete"
+          "Ref": "ApiGatewayResourceCheckoutDashcomplete"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -290,7 +352,50 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1590430392006": {
+    "ApiGatewayMethodDeleteDashsubscriptionPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceDeleteDashsubscription"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "DeleteSubscriptionLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayDeployment1590456551937": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -299,7 +404,8 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodCheckoutcompletePost"
+        "ApiGatewayMethodCheckoutDashcompletePost",
+        "ApiGatewayMethodDeleteDashsubscriptionPost"
       ]
     },
     "CheckoutCompleteLambdaPermissionApiGateway": {
@@ -308,6 +414,43 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "CheckoutCompleteLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "DeleteSubscriptionLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DeleteSubscriptionLambdaFunction",
             "Arn"
           ]
         },
@@ -448,7 +591,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-functions/dev/1590430396107-2020-05-25T18:13:16.107Z/custom-resources.zip"
+          "S3Key": "serverless/serverless-functions/dev/1590456557415-2020-05-26T01:29:17.415Z/custom-resources.zip"
         },
         "FunctionName": "serverless-functions-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -473,6 +616,16 @@
         "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
         "LogGroupName": {
           "Ref": "CheckoutCompleteLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterDeleteSubscriptionLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:us-east-1:802587217904:destination:g9Qt37b0nPDbx4tPbc#HPGNMtpV0M8jtnRw3w#serverless-functions#dev",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "DeleteSubscriptionLogGroup"
         }
       }
     },
@@ -504,7 +657,13 @@
     "CheckoutCompleteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CheckoutCompleteLambdaVersionDKpPC5qzg8uwFLuY8d1DgN6jGRWjb9mk8YMLaU8AWVQ"
+        "Ref": "CheckoutCompleteLambdaVersionudyVqStTbba8aoTLYqUBHwWoCcC1dE4xhP4nc7MN4A"
+      }
+    },
+    "DeleteSubscriptionLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "DeleteSubscriptionLambdaVersionQETmM2Sf1Baf6UeEMQeXJ08Wi524UVsZaeuHXtd3ZLU"
       }
     },
     "ServiceEndpoint": {

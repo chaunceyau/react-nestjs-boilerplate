@@ -2,20 +2,20 @@ import { Field, ObjectType, InputType, registerEnumType } from '@nestjs/graphql'
 
 @InputType()
 export class CreateSubscriptionInput {
-  @Field(type => String)
+  @Field(_type => PremiumPlanType)
   plan: PremiumPlanType
-  // @Field(type => String)
+  // @Field(_type => String)
   // payment_method_id: string
 }
 
 @ObjectType()
 export class CreateSubscriptionResponse {
-  @Field(type => Boolean)
-  success: boolean
+  @Field(_type => String)
+  id: string
 }
 
 export enum PremiumPlanType {
-  PREMIUM_MONTHLY = 'PREMIUM_ANNUAL',
+  PREMIUM_MONTHLY = 'PREMIUM_MONTHLY',
   PREMIUM_ANNUAL = 'PREMIUM_ANNUAL',
 }
 

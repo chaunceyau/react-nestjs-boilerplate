@@ -1,5 +1,3 @@
-import Stripe from 'stripe'
-import { InjectStripe } from 'nestjs-stripe'
 import { Controller, Response, Get, UseGuards } from '@nestjs/common'
 //
 import { PrismaService } from '../prisma/prisma.service'
@@ -19,11 +17,10 @@ export class SubscriptionController {
   async redirectToBillingPortalSession(@RESTUser() user, @Response() res) {
     const db_user = await this.prisma.user.findOne({
       where: { id: user.id },
-      select: { stripe_info: true },
     })
 
     const url = await this.subscriptionService.createBillingPortalSession({
-      customer_id: db_user.stripe_info.customer_id,
+      customer_id: db_user.stripe_customer_id,
     })
 
     res.redirect(url)

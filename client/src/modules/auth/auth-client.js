@@ -7,14 +7,15 @@ export const QUERY_CURRENT_USER = gql`
   query QUERY_CURRENT_USER {
     currentUser {
       id
+      subscription_type
     }
   }
 `
 
 function handleUserResponse({ data }) {
-  console.log('012ek')
+  // console.log('012ek')
   if (!data) return { data: null }
-  console.log('012ekr032l')
+  // console.log('012ekr032l')
   return data.login
 }
 

@@ -6,7 +6,7 @@ const client = new prisma.PrismaClient();
 
 const endpointSecret = "whsec_U5Y6K2IcakDvM1BdsUkqcNA4Gzd4gYSF";
 
-module.exports.hello = async (event) => {
+module.exports.handler = async (event) => {
   const parsed_body = JSON.parse(event.body);
   const checkout_session = parsed_body.data.object;
   const sig = event.headers["Stripe-Signature"];

@@ -59,10 +59,16 @@ provider:
 
 functions:
   checkoutComplete:
-    handler: checkout-complete.hello
+    handler: checkout-complete.handler
     events:
       - http:
-          path: checkoutComplete
+          path: checkout-complete
+          method: post
+  deleteSubscription:
+    handler: delete-subscription.handler
+    events:
+      - http:
+          path: delete-subscription
           method: post
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
