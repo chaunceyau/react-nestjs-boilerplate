@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery } from '@apollo/client'
 //
 import * as authClient from '../auth/auth-client'
-import { LoadingIndicator } from '../misc/loading-indicator'
+import { FullPageLoading } from '../components/full-page-loading'
 
 const AuthContext = React.createContext()
 
@@ -14,7 +14,7 @@ function AuthProvider(props) {
 
   const firstAttemptIncomplete = called && loading && !data
   if (firstAttemptIncomplete) {
-    if (loading) return <LoadingIndicator />
+    if (loading) return <FullPageLoading />
     if (error) {
       return (
         <div css={{ color: 'red' }}>
